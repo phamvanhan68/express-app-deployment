@@ -1,11 +1,15 @@
 const express = require('express');
+const dotenv = require("dotenv");
+
+dotenv.config();
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT;
+const NODE_ENV = process.env.NODE_ENV;
 
 app.get('/', (req, res)=>{
 	res.status(200);
-	res.send("Welcome to root URL of Server Verson 2");
+	res.send(`Welcome to root URL of Server Verson 2, Using Port ${PORT} and Env ${NODE_ENV}`);
 });
 
 app.listen(PORT, (error) =>{
