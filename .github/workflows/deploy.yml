@@ -23,7 +23,7 @@ jobs:
         username: ${{ secrets.EC2_USER }}
         key: ${{ secrets.EC2_KEY }}
         source: ./
-        target: /home/ubuntu/ubuntu/express-app-deployment/
+        target: /home/ubuntu/express-app-deployment/
 
     - name: Connect to EC2 instance and deploy application
       uses: appleboy/ssh-action@master
@@ -32,7 +32,7 @@ jobs:
         username: ${{ secrets.EC2_USER }}
         key: ${{ secrets.EC2_KEY }}
         script: |
-          cd /home/ubuntu/ubuntu/express-app-deployment
+          cd /home/ubuntu/express-app-deployment
           npm install
           pm2 stop express-app
           pm2 start npm --name "express-app" -- start
