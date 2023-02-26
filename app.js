@@ -5,7 +5,7 @@ const PORT = 3000;
 
 app.get('/', (req, res)=>{
 	res.status(200);
-	res.send("Welcome to root URL of Server");
+	res.send("Welcome to root URL of Server Verson 2");
 });
 
 app.listen(PORT, (error) =>{
