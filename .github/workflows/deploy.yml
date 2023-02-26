@@ -1,23 +1,38 @@
-# name: Deploy to AWS
-# on:
-#   push:
-#     branches:
-#       - main
-# jobs:
-#   deploy:
-#     runs-on: ubuntu-latest
-#     steps:
-#     - uses: actions/checkout@v2
-#     - name: Install Dependencies
-#       run: npm install
-#     - name: Deploy to AWS EC2
-#       uses: appleboy/ssh-action@master
-#       with:
-#         host: ${{ secrets.HOST }}
-#         username: ${{ secrets.USERNAME }}
-#         password: ${{ secrets.PASSWORD }}
-#         script: |
-#           cd /var/www/html
-#           git pull
-#           npm install
-#           pm2 restart all
+name: Deploy to AWS EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Copy files to EC2 instance
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USER }}
+        key: ${{ secrets.EC2_KEY }}
+        source: ./
+        target: /home/ubuntu/ubuntu/express-app-deployment/
+
+    - name: Connect to EC2 instance and deploy application
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USER }}
+        key: ${{ secrets.EC2_KEY }}
+        script: |
+          cd /home/ubuntu/ubuntu/express-app-deployment
+          npm install
+          pm2 stop express-app
+          pm2 start npm --name "express-app" -- start
