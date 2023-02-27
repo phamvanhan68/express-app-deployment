@@ -9,7 +9,7 @@ const NODE_ENV = process.env.NODE_ENV;
 
 app.get('/', (req, res)=>{
 	res.status(200);
-	res.send(`Welcome to root URL of Server Verson 2, Using Port ${PORT} and Env ${NODE_ENV}`);
+	res.send(`Welcome to root URL of Server Verson 2.1, Using Port ${PORT} and Env ${NODE_ENV}`);
 });
 
 app.listen(PORT, (error) =>{

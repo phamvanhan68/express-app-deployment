@@ -36,7 +36,7 @@ jobs:
           npm install
           pm2 stop express-app
           echo "NODE_ENV=production" > .env
-          echo "PORT=3000" >> .env
+          echo "PORT=3000" > .env
           pm2 start npm --name "express-app" -- start
 
       
